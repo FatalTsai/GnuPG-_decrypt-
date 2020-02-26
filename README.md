@@ -4,3 +4,10 @@ https://mistech.pixnet.net/blog/post/114700102-gnupg-%28gpg%29-in-win32-%E5%85%8
 https://yanhan.github.io/posts/2017-09-27-how-to-use-gpg-to-encrypt-stuff.html
 
 https://dywang.csie.cyut.edu.tw/dywang/security/node127.html
+
+command :
+gpg --check-sigs
+
+gpg --recipient 2B9FEE81  --output ./testdecrypt/en.txt --encrypt ./testdecrypt/test
+
+gpg --output ./testdecrypt/de.txt  --decrypt ./testdecrypt/en.txt
