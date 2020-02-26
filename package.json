@@ -1,0 +1,24 @@
+{
+  "name": "gpu_decrypt",
+  "version": "1.0.0",
+  "description": "https://mistech.pixnet.net/blog/post/114700102-gnupg-%28gpg%29-in-win32-%E5%85%8D%E8%B2%BB%E6%AA%94%E6%A1%88%E5%8A%A0%E8%A7%A3%E5%AF%86%E8%BB%9F%E9%AB%94%E6%A6%82%E5%BF%B5%E8%88%87%E5%AF%A6",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FatalTsai/GnuPG-_decrypt-.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FatalTsai/GnuPG-_decrypt-/issues"
+  },
+  "homepage": "https://github.com/FatalTsai/GnuPG-_decrypt-#readme",
+  "dependencies": {
+    "gpg": "^0.6.0",
+    "pgp": "^0.1.0"
+  }
+}
