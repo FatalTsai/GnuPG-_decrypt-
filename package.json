@@ -19,6 +19,7 @@
   "homepage": "https://github.com/FatalTsai/GnuPG-_decrypt-#readme",
   "dependencies": {
     "gpg": "^0.6.0",
+    "node-powershell": "^4.0.0",
     "pgp": "^0.1.0"
   }
 }

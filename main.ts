@@ -6,12 +6,11 @@ var  readline = require('readline');
 var gpg = require('gpg')
 var fileDecrypted ='./testdecrypt/de.txt'
 var fileEncrypted = './testdecrypt/en.txt'
-/*
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});*/
-exec(` gpg --batch --passphrase-fd 0 --armor --decrypt ./testdecrypt/en.txt < pwd.txt`, function(error, stdout, stderr){
+
+
+
+
+exec(` gpg --batch --passphrase-fd 0 --armor --decrypt ./testdecrypt/en.txt `, function(error, stdout, stderr){
     if(error) {
         console.error('error: ' + error,'cp950');
         console.error('error: '+error)
@@ -21,24 +20,20 @@ exec(` gpg --batch --passphrase-fd 0 --armor --decrypt ./testdecrypt/en.txt < pw
     console.log('stdout: ' + stdout);
     console.log('stderr: ' +  stderr);
 });
-/*
-exec(`gpg --output ./testdecrypt/de.txt  --decrypt ./testdecrypt/en.txt`,{encoding:'binaryEncoding'}, function(error, stdout, stderr){
-    if(error) {
-        //console.error('error: ' + iconv.decode(error,'cp950'));
-        //console.error('error: '+error)
-        return;
-    }
-   
-    console.log('stdout: ' + iconv.decode(stdout,'cp950'));
-    console.log('stderr: ' +  stderr);
-});*/
 
-/*
-gpg.callStreaming(fileEncrypted, fileDecrypted, 'fuck', (err, success) => {
-    // success/err
-    if(err)
-        console.log(err)
-    else if(success)
-        console.log(success)
 
-  });*/
+const Shell = require('node-powershell');
+ 
+const ps = new Shell({
+  executionPolicy: 'Bypass',
+  noProfile: true
+});
+ 
+ps.addCommand(`echo "ff" | gpg --batch --passphrase-fd 0 --armor --decrypt ./testdecrypt/en.txt`);
+ps.invoke()
+.then(output => {
+  console.log('output = '+output);
+})
+.catch(err => {
+  console.log('err = '+err);
+})
