@@ -3,9 +3,10 @@ var fs = require('fs')
 var exec = require('child_process').exec;
 var spawn = require("child_process").spawn,child;
 var orderstring ="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-var order =[null,"0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t",
-"u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",]
-
+//var order =[null,"0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t",
+//"u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",]
+var order =[null,"0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f","g","h","i","j","k","l",
+"m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
 var found = false
 
 var init =[]
@@ -15,8 +16,8 @@ process.argv.forEach((val, index) => {
     console.log(`${index}: ${val}`);
   });
   
-var prefix = process.argv[2]  
-
+var prefix1 = process.argv[2]  
+var prefix2 =process.argv[3]
 
 for(var i=0;i<5;i++)
 {
@@ -43,7 +44,7 @@ var carry = function(output)
 }
 var tostring =function(input)
 {
-    var result=prefix
+    var result=''
     input.forEach(element => {
         if(element != 0)
             result+=order[element]
@@ -107,7 +108,8 @@ var isrepeat = function(input ){
   
 
 //ref :https://medium.com/@ali.dev/how-to-use-promise-with-exec-in-node-js-a39c4d7bbf77
-function execShellCommand(input) {
+function execShellCommand(input,prefix) {
+    input = prefix+input
     var cmd =  `echo|set /p="${input}"| gpg --batch --passphrase-fd 0 --armor --decrypt ./testdecrypt/en.txt`
    const exec = require('child_process').exec;
    return new Promise((resolve, reject) => {
@@ -131,8 +133,7 @@ function execShellCommand(input) {
 
 
 (async function () {  
-
-    var k= 10
+    var k= 0
     while(init != fullfill && !found){
     //while(k-- && !found){
         //console.log(init)
@@ -144,18 +145,27 @@ function execShellCommand(input) {
         }
         //sleep(1000)
         //shelltry(tostring(init))
-        var out = await execShellCommand(tostring(init))
+        var out = await execShellCommand(tostring(init),prefix1)
         console.log(out)
-        
-    }
-    //console.log(tostring(init) )
-    //shelltry(tostring(init) )
-        function sleep(milliseconds) 
-        { 
-        var start = new Date().getTime(); 
-        while(1)
-            if ((new Date().getTime() - start) > milliseconds)
-                break;
+        out = await execShellCommand(tostring(init),prefix2)
+        console.log(out)
+        k = (k+1)%1000
+        if(k == 0)
+        {
+            console.log(`prefix : ${prefix1} ${prefix2} test to ${init} ${tostring(init)}\n`)
+            fs.appendFileSync('record',`prefix : ${prefix1} ${prefix2} test to ${init} ${tostring(init)}\n`)
         }
+    }
+
 
 })();
+
+    //console.log(tostring(init) )
+    //shelltry(tostring(init) )
+    function sleep(milliseconds) 
+    { 
+    var start = new Date().getTime(); 
+    while(1)
+        if ((new Date().getTime() - start) > milliseconds)
+            break;
+    }
