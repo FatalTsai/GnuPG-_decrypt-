@@ -1,0 +1,1 @@
+echo|set /p="fuck"| gpg --batch --passphrase-fd 0 --armor --decrypt ./testdecrypt/en.txt
