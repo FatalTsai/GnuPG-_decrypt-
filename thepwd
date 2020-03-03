@@ -1,1 +1,9 @@
-echo|set /p="fuck"| gpg --batch --passphrase-fd 0 --armor --decrypt ./testdecrypt/en.txt
+fuck is the pwd ---Tue Mar 03 2020 14:04:24 GMT+0800 (GMT+08:00)
+fuck is the pwd ---Tue Mar 03 2020 14:04:41 GMT+0800 (GMT+08:00)
+fuck is the pwd ---Tue Mar 03 2020 14:21:41 GMT+0800 (GMT+08:00)
+fuck is the pwd ---Tue Mar 03 2020 14:21:56 GMT+0800 (GMT+08:00)
+fuck is the pwd ---Tue Mar 03 2020 14:23:39 GMT+0800 (GMT+08:00)
+fuck is the pwd ---Tue Mar 03 2020 14:26:35 GMT+0800 (GMT+08:00)
+fuck is the pwd ---Tue Mar 03 2020 14:32:15 GMT+0800 (GMT+08:00)
+fuck is the pwd ---Tue Mar 03 2020 15:00:06 GMT+0800 (GMT+08:00)
+fuck is the pwd ---Tue Mar 03 2020 15:28:51 GMT+0800 (GMT+08:00)

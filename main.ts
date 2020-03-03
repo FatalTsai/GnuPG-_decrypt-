@@ -1,39 +1,17 @@
-  
-var process = require('child_process');
 var exec = require('child_process').exec;
-var iconv = require('iconv-lite');
-var  readline = require('readline');
-var gpg = require('gpg')
-var fileDecrypted ='./testdecrypt/de.txt'
-var fileEncrypted = './testdecrypt/en.txt'
+var order =[null,"0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t",
+"u","v","w","x","y","z","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",]
 
-
-
-
-exec(` gpg --batch --passphrase-fd 0 --armor --decrypt ./testdecrypt/en.txt `, function(error, stdout, stderr){
+for(var i=1;i<order.length;i++){
+  exec(`start cmd /k "node power.ts ${order[i]} "` , function(error, stdout, stderr){
     if(error) {
         console.error('error: ' + error,'cp950');
         console.error('error: '+error)
         return;
     }
-   
+
     console.log('stdout: ' + stdout);
     console.log('stderr: ' +  stderr);
-});
 
-
-const Shell = require('node-powershell');
- 
-const ps = new Shell({
-  executionPolicy: 'Bypass',
-  noProfile: true
-});
- 
-ps.addCommand(`echo "ff" | gpg --batch --passphrase-fd 0 --armor --decrypt ./testdecrypt/en.txt`);
-ps.invoke()
-.then(output => {
-  console.log('output = '+output);
-})
-.catch(err => {
-  console.log('err = '+err);
-})
+  });
+}

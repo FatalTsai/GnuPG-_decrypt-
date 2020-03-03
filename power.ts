@@ -8,8 +8,27 @@ var order =[null,"0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"
 
 var found = false
 
-var init =[10,31,13,21]
-var fullfill = [order.length,order.length,order.length,order.length]
+var init =[]
+var fullfill =[]
+
+process.argv.forEach((val, index) => {
+    console.log(`${index}: ${val}`);
+  });
+  
+var prefix = process.argv[2]  
+
+
+for(var i=0;i<5;i++)
+{
+    init.push(0)
+    fullfill.push(order.length)   
+}
+// init =[0,0,13,21]
+//init[3]=21
+//init[2]=13
+init[4]=0
+console.log('init = '+init)
+
 var carry = function(output)
 {
     output[0]+=1
@@ -24,7 +43,7 @@ var carry = function(output)
 }
 var tostring =function(input)
 {
-    var result=''
+    var result=prefix
     input.forEach(element => {
         if(element != 0)
             result+=order[element]
@@ -33,7 +52,7 @@ var tostring =function(input)
     return result
 }
 
-var shelltry =function(input){
+var shelltry =function(input){ //abandon run in cannot promise
 
     var gpgc = `echo|set /p="${input}"| gpg --batch --passphrase-fd 0 --armor --decrypt ./testdecrypt/en.txt`
     //ref https://ss64.com/nt/syntax-redirection.html command pipe
@@ -55,7 +74,8 @@ var shelltry =function(input){
 
      });
 
-/*
+ 
+/* abandon run command in powershell
     child = spawn("powershell.exe",[gpgc]);
     child.stdout.on("data",function(data){
         console.log("Powershell Data: " + data);
@@ -72,25 +92,70 @@ var shelltry =function(input){
 }
 
 
-fs.writeFileSync('order_log','')
-var k= 100
-//while(init != fullfill){
-while(k--){
-    //console.log(init)
-    //console.log(tostring(init))`
-    //fs.appendFileSync('order_log','\n'+tostring(init));
-    init = carry(init)
-    //sleep(1000)
-    shelltry(tostring(init))
-
-}
-//console.log(tostring(init) )
-//shelltry(tostring(init) )
-    function sleep(milliseconds) 
-    { 
-    var start = new Date().getTime(); 
-    while(1)
-        if ((new Date().getTime() - start) > milliseconds)
-            break;
+var isrepeat = function(input ){
+    var havenotnull = false
+    var result  = false
+    for(var i =0;i < input.length-1;i++){
+      if(input[i] == 0 && input[i+1] !=0)
+      {
+        result = true
+      }
+  
     }
+    return result
+  }
+  
 
+//ref :https://medium.com/@ali.dev/how-to-use-promise-with-exec-in-node-js-a39c4d7bbf77
+function execShellCommand(input) {
+    var cmd =  `echo|set /p="${input}"| gpg --batch --passphrase-fd 0 --armor --decrypt ./testdecrypt/en.txt`
+   const exec = require('child_process').exec;
+   return new Promise((resolve, reject) => {
+    exec(cmd, (error, stdout, stderr) => {
+     if (error) {
+      //console.warn(error);
+     }
+     if(stdout)
+     {             
+        var time2 = new Date()
+        time2.setTime(Date.now())
+        fs.appendFileSync('thepwd',`${input} is the pwd ---${time2}\n`);
+        found = true
+        console.log(stdout)
+     }
+     //resolve(stdout? stdout : stderr);
+     resolve(stdout? input +': pwd found!!!' :input+': not this one')
+    });
+   });
+  }
+
+
+(async function () {  
+
+    var k= 10
+    while(init != fullfill && !found){
+    //while(k-- && !found){
+        //console.log(init)
+        //console.log(tostring(init))`
+        init = carry(init)
+        if(isrepeat(init))
+        {
+            continue
+        }
+        //sleep(1000)
+        //shelltry(tostring(init))
+        var out = await execShellCommand(tostring(init))
+        console.log(out)
+        
+    }
+    //console.log(tostring(init) )
+    //shelltry(tostring(init) )
+        function sleep(milliseconds) 
+        { 
+        var start = new Date().getTime(); 
+        while(1)
+            if ((new Date().getTime() - start) > milliseconds)
+                break;
+        }
+
+})();
