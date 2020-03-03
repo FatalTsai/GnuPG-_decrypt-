@@ -19,7 +19,7 @@ process.argv.forEach((val, index) => {
 var prefix1 = process.argv[2]  
 var prefix2 =process.argv[3]
 
-for(var i=0;i<5;i++)
+for(var i=0;i<32;i++)
 {
     init.push(0)
     fullfill.push(order.length)   
@@ -149,7 +149,7 @@ function execShellCommand(input,prefix) {
         console.log(out)
         out = await execShellCommand(tostring(init),prefix2)
         console.log(out)
-        k = (k+1)%1000
+        k = (k+1)%10
         if(k == 0)
         {
             console.log(`prefix : ${prefix1} ${prefix2} test to ${init} ${tostring(init)}\n`)
