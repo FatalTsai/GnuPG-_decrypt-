@@ -24,10 +24,9 @@ for(var i=0;i<32;i++)
     init.push(0)
     fullfill.push(order.length)   
 }
-// init =[0,0,13,21]
-//init[3]=21
-//init[2]=13
-init[4]=0
+var backup = JSON.parse(fs.readFileSync('record.json'))
+init = backup[prefix2]
+
 console.log('init = '+init)
 
 var carry = function(output)
@@ -164,12 +163,12 @@ function execShellCommand(input,prefix) {
 
 })();
 
-    //console.log(tostring(init) )
-    //shelltry(tostring(init) )
-    function sleep(milliseconds) 
-    { 
-    var start = new Date().getTime(); 
-    while(1)
-        if ((new Date().getTime() - start) > milliseconds)
-            break;
-    }
+//console.log(tostring(init) )
+//shelltry(tostring(init) )
+function sleep(milliseconds) 
+{ 
+var start = new Date().getTime(); 
+while(1)
+    if ((new Date().getTime() - start) > milliseconds)
+        break;
+}
